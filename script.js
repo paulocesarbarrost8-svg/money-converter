@@ -5,15 +5,18 @@ const currencyImage = document.getElementById("currencyImage")
 const sourceValue = document.getElementById("sourceValue")
 const chrrencmeney = document.getElementById("chrrenc-meney")
 
-function clicar() {
+async function clicar() {
     const valor = Number(meuInput.value)
-    const dolar = 5.10;
-    const euro = 5.91;
-    const libra = 6.81
-    const bitcoin = 322.916
+
+    const data = await fetch(" https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL,GBP-BRL").then(response => response.json())
+    const dolar = data.USDBRL.high
+    const euro = data.EURBRL.high
+    const libra = data.GBPBRL.high
+    const bitcoin = data.BTCBRL.high
+    console.log(data)
 
     if (meuInput.value === "" || valor <= 0) { //se o select estiver sem nenhum valor, entre aqui
-        resultado.innerHTML = "digite um valor válido"
+        resultado.innerHTML = "digite um valo!r válido"
         sourceValue.innerHTML = "R$ 0,00"
         return;
     }
@@ -34,7 +37,7 @@ function clicar() {
         resultado.innerHTML = "£" + valorConvertido.toFixed(2)
     } else if(moedaSelect.value.includes("Bitcoin")){
         const valorConvertido = valor / bitcoin;
-        resultado.innerHTML = "₿" + valorConvertido.toFixed(1)
+        resultado.innerHTML = "₿ " + valorConvertido.toFixed(8)
     }
 }
 
